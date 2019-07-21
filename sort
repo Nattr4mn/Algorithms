@@ -36,12 +36,6 @@ int main()
 	ShowArray(arr, n, "Отсортированный массив методом вставкой:");
 	cout << endl;
 
-	FillArray(arr, n);
-	ShowArray(arr, n, "Неотсортированный массив:");
-	InsertsSort(arr, n);
-	ShowArray(arr, n, "Отсортированный массив методом Шелла:");
-	cout << endl;
-
 	delete[] arr;
 	delete n;
 	system("pause>nul");
@@ -110,35 +104,6 @@ void ShiftArray(int* arr, const int* i, const int* j)
 	}
 	arr[*j] = *tmp;
 	delete tmp;
-}
-
-void ShelSort(int* arr, const int* n)
-{
-	int numbSublists;
-	for (numbSublists = 1; 2 * numbSublists < *n; numbSublists *= 2);
-	while (numbSublists >= 1)
-	{
-		for (int i = 1; i <= numbSublists; i++)
-		{
-			
-		}
-		numbSublists /= 2;
-	}
-}
-
-void ShelInsertsSort(int* arr, const int* n, int start, int numbSublists)
-{
-	for (int i = 1; i < *n; i+=(*n/numbSublists))
-	{
-		for (int j = 0; j < i; j++)
-		{
-			if (arr[i] < arr[j])
-			{
-				ShiftArray(arr, &i, &j);
-				break;
-			}
-		}
-	}
 }
 
 void FillArray(int* arr, const int* n)
