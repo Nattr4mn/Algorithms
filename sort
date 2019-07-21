@@ -1,0 +1,157 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <string>
+
+using namespace std;
+void SelSort(int* arr, const int* n);
+void BubbleSort(int* arr, const int* n);
+void FillArray(int* arr, const int* n);
+void ShowArray(int* arr, const int* n, string text);
+void InsertsSort(int* arr, const int* n);
+void ShiftArray(int* arr, const int* i, const int* j);
+
+int main()
+{
+	system("chcp 1251>nul");
+
+	const int* n = new int{ 10 };
+	int* arr = new int[*n];
+
+	FillArray(arr, n);
+	ShowArray(arr, n, "Неотсортированный массив:");
+	SelSort(arr, n);
+	ShowArray(arr, n, "Отсортированный массив методом выбора:");
+	cout << endl;
+
+	FillArray(arr, n);
+	ShowArray(arr, n, "Неотсортированный массив:");
+	BubbleSort(arr, n);
+	ShowArray(arr, n, "Отсортированный массив методом пузырька:");
+	cout << endl;
+
+	FillArray(arr, n);
+	ShowArray(arr, n, "Неотсортированный массив:");
+	InsertsSort(arr, n);
+	ShowArray(arr, n, "Отсортированный массив методом вставкой:");
+	cout << endl;
+
+	FillArray(arr, n);
+	ShowArray(arr, n, "Неотсортированный массив:");
+	InsertsSort(arr, n);
+	ShowArray(arr, n, "Отсортированный массив методом Шелла:");
+	cout << endl;
+
+	delete[] arr;
+	delete n;
+	system("pause>nul");
+}
+
+void SelSort(int* arr, const int* n)
+{
+	int* minElementArr = new int{};
+	int* tmp = new int{};
+	for (int i = 0; i < *n; i++)
+	{
+		*minElementArr = i;
+		for (int j = i + 1; j < *n; j++)
+		{
+			if (arr[*minElementArr] > arr[j])
+				*minElementArr = j;
+		}
+		*tmp = arr[i];
+		arr[i] = arr[*minElementArr];
+		arr[*minElementArr] = *tmp;
+	}
+	delete minElementArr;
+	delete tmp;
+}
+
+void BubbleSort(int* arr, const int* n)
+{
+	int* tmp = new int{};
+	for (int i = 0; i < *n; i++)
+	{
+		for (int j = 1; j < *n; j++)
+		{
+			if (arr[j - 1] > arr[j])
+			{
+				*tmp = arr[j - 1];
+				arr[j - 1] = arr[j];
+				arr[j] = *tmp;
+			}
+		}
+	}
+	delete tmp;
+}
+
+void InsertsSort(int* arr, const int* n)
+{
+	for (int i = 1; i < *n; i++)
+	{
+		for (int j = 0; j < i; j++)
+		{
+			if (arr[i] < arr[j])
+			{
+				ShiftArray(arr, &i, &j);
+				break;
+			}
+		}
+	}
+}
+
+void ShiftArray(int* arr, const int* i, const int* j)
+{
+	int* tmp = new int{};
+	*tmp = arr[*i];
+	for (int k = *i; k >= *j; k--)
+	{
+		arr[k] = arr[k - 1];
+	}
+	arr[*j] = *tmp;
+	delete tmp;
+}
+
+void ShelSort(int* arr, const int* n)
+{
+	int numbSublists;
+	for (numbSublists = 1; 2 * numbSublists < *n; numbSublists *= 2);
+	while (numbSublists >= 1)
+	{
+		for (int i = 1; i <= numbSublists; i++)
+		{
+			
+		}
+		numbSublists /= 2;
+	}
+}
+
+void ShelInsertsSort(int* arr, const int* n, int start, int numbSublists)
+{
+	for (int i = 1; i < *n; i+=(*n/numbSublists))
+	{
+		for (int j = 0; j < i; j++)
+		{
+			if (arr[i] < arr[j])
+			{
+				ShiftArray(arr, &i, &j);
+				break;
+			}
+		}
+	}
+}
+
+void FillArray(int* arr, const int* n)
+{
+	srand(time(NULL));
+	for (int i = 0; i < *n; i++)
+		arr[i] = 1 + rand() % ((*n) * 2);
+}
+
+void ShowArray(int* arr, const int* n, string text)
+{
+	cout << text << endl;
+	for (int i = 0; i < *n; i++)
+		cout << arr[i] << ' ';
+	cout << endl;
+}
